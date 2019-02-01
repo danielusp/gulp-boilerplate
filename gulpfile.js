@@ -4,6 +4,7 @@ const rename = require('gulp-rename')
 const cleanCSS = require('gulp-clean-css')
 const uglify = require('gulp-uglify')
 const concat = require('gulp-concat')
+const del = require('del')
 const browserSync = require('browser-sync').create()
 
 /**
@@ -69,6 +70,17 @@ gulp.task('pack-js', () => {
 gulp.task('html', () => {
     return gulp.src('./app/**/*.php')
         .pipe(browserSync.stream())
+})
+
+/**
+ * Clear Gulp generated files
+ */
+gulp.task('clear', () => {
+    return del([
+            'app/css/*.css',
+            'app/includes/style.php',
+            'app/js/*.min.js'
+        ])
 })
 
 /**
