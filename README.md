@@ -2,6 +2,19 @@
 
 Pre configured Gulp tasks to start faster.
 
+## Why a task manager?
+
+ - Join Javascript/css files
+ - Minify/Uglify js/css files
+ - Convert sass, ts etc. to production format
+ - Prefix CSS
+ - Delete files like logs etc.
+ - Generate specific files to include into projects
+ - Watch for file changes and refresh development enviroment 
+ - Keeping apart development files from production files in a easy way
+ - Speed up development/debug
+ - ...
+
 ### Install
 
 Inside folder's project

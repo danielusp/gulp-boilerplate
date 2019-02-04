@@ -9,6 +9,13 @@ var bodyClick = {
     show: function()
     {
         alert('You click me!');
+    },
+
+    //  Example of how a local variable is minified
+    minifyVariable: function()
+    {
+        var localScope = "This variable is minified because has a local scope";
+        console.log(localScope);
     }
 }
 
