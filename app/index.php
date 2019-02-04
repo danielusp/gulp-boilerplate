@@ -19,4 +19,5 @@
     </body>
     <script src="js/main.min.js"></script>
     <script src="js/all.min.js"></script>
+    <script src="js/es6-babel.js"></script>
 </html>

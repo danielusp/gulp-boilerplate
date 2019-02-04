@@ -4,9 +4,13 @@
   "description": "",
   "main": "gulpfile.js",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.4.0",
