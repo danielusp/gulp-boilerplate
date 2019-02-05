@@ -6,3 +6,5 @@ app/js/es6-babel.js
 
 # Node apps #
 node_modules/
+app/img/*
+!app/img/.gitkeep

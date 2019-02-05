@@ -59,3 +59,4 @@ List of Gulp extensions installed in this boilerplate
  - @babel/cli
  - @babel/core
  - @babel/preset-env
+ - gulp-imagemin

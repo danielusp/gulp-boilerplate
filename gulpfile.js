@@ -6,6 +6,7 @@ const uglify = require('gulp-uglify')
 const concat = require('gulp-concat')
 const babel = require('gulp-babel')
 const del = require('del')
+const imagemin = require('gulp-imagemin')
 const browserSync = require('browser-sync').create()
 
 /**
@@ -81,6 +82,16 @@ gulp.task('pack-js', () => {
 });
 
 /**
+ * Compress images
+ */
+gulp.task('img', () => {
+    return gulp.src('./app/img-src/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./app/img'))
+        .pipe(browserSync.stream())
+});
+
+/**
  * Look for changes in php files to reload the browser
  */
 gulp.task('html', () => {
@@ -96,7 +107,8 @@ gulp.task('clear', () => {
             'app/css/*.css',
             'app/includes/style.php',
             'app/js/*.min.js',
-            'app/js/es6-babel.js'
+            'app/js/es6-babel.js',
+            'app/img/*'
         ])
 })
 
@@ -115,10 +127,11 @@ gulp.task('browser-sync', () => {
     gulp.watch('./app/css/*.scss', gulp.series('pack-sass'))
     gulp.watch('./app/js/es6Pattern.js', gulp.series('babel'))
     gulp.watch('./app/js/main.js', gulp.series('js'))
+    gulp.watch('./app/img-src/*', gulp.series('img'))
     gulp.watch('./app/**/*.php', gulp.series('html'))
 })
 
 /**
  * Call all tasks with a simple $ gulp
  */
-gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','html','browser-sync'))
+gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','html','browser-sync'))
