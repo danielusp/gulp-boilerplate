@@ -7,6 +7,7 @@ Pre configured Gulp tasks to start faster.
  - Join Javascript/css files
  - Minify/Uglify js/css files
  - Convert sass, ts etc. to production format
+ - Generate css/js maps to better browser inspect
  - Write your code in ES6 pattern and transpile it to previous formats
  - Prefix CSS
  - Delete files like logs etc.
@@ -60,3 +61,4 @@ List of Gulp extensions installed in this boilerplate
  - @babel/core
  - @babel/preset-env
  - gulp-imagemin
+ - gulp-sourcemaps

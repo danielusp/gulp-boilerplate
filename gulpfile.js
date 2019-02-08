@@ -7,6 +7,7 @@ const concat = require('gulp-concat')
 const babel = require('gulp-babel')
 const del = require('del')
 const imagemin = require('gulp-imagemin')
+const sourcemaps = require('gulp-sourcemaps')
 const browserSync = require('browser-sync').create()
 
 /**
@@ -45,12 +46,14 @@ gulp.task('pack-sass', () => {
 });
 
 /**
- * Minify main.js
+ * Minify main.js and generate a .map file to better browser inspect
  */
 gulp.task('js', () => {
     return gulp.src(['./app/js/main.js'])
+        .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(rename({suffix:'.min'}))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./app/js'))
         .pipe(browserSync.stream())
 });
@@ -107,6 +110,7 @@ gulp.task('clear', () => {
             'app/css/*.css',
             'app/includes/style.php',
             'app/js/*.min.js',
+            'app/js/*.map',
             'app/js/es6-babel.js',
             'app/img/*'
         ])
