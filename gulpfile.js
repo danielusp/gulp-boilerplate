@@ -14,7 +14,7 @@ const browserSync = require('browser-sync').create()
  * Generates css for html body into include folder
  */
 gulp.task('csshtml', () => {
-    return gulp.src('./app/css/style.html.scss')
+    return gulp.src('./dev/css/style.html.scss')
       .pipe(sass().on('error', sass.logError))
       .pipe(cleanCSS({compatibility: 'ie8'}))
       .pipe(rename('style.php'))
@@ -26,7 +26,7 @@ gulp.task('csshtml', () => {
  * Generates a compact style.css
  */
 gulp.task('sass', () => {
-    return gulp.src(['./app/css/style.scss'])
+    return gulp.src(['./dev/css/style.scss'])
       .pipe(sass().on('error', sass.logError))
       .pipe(cleanCSS({compatibility: 'ie8'}))
       .pipe(gulp.dest('./app/css'))
@@ -37,7 +37,7 @@ gulp.task('sass', () => {
  * Join all other .scss files into one called all.css
  */
 gulp.task('pack-sass', () => {
-    return gulp.src(['./app/css/*.scss','!./app/css/*.html.scss','!./app/css/style.scss'])
+    return gulp.src(['./dev/css/*.scss','!./dev/css/*.html.scss','!./dev/css/style.scss'])
       .pipe(sass().on('error', sass.logError))
       .pipe(concat('all.css'))
       .pipe(cleanCSS({compatibility: 'ie8'}))
@@ -49,7 +49,7 @@ gulp.task('pack-sass', () => {
  * Minify main.js and generate a .map file to better browser inspect
  */
 gulp.task('js', () => {
-    return gulp.src(['./app/js/main.js'])
+    return gulp.src(['./dev/js/main.js'])
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(rename({suffix:'.min'}))
@@ -64,7 +64,7 @@ gulp.task('js', () => {
  * This example doesn't minify the final js file
  */
 gulp.task('babel', () => {
-    return gulp.src('./app/js/es6Pattern.js')
+    return gulp.src('./dev/js/es6Pattern.js')
         .pipe(babel({
             presets:['@babel/env']
         }))
@@ -77,7 +77,7 @@ gulp.task('babel', () => {
  * Join all other .js files into one called all.min.js
  */
 gulp.task('pack-js', () => {
-    return gulp.src(['./app/js/*.js', '!./app/js/main.js', '!./app/js/*.min.js', '!./app/js/es6Pattern.js', '!./app/js/es6-babel.js'])
+    return gulp.src(['./dev/js/*.js', '!./dev/js/main.js', '!./dev/js/es6Pattern.js'])
         .pipe(concat('all.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./app/js'))
@@ -88,7 +88,7 @@ gulp.task('pack-js', () => {
  * Compress images
  */
 gulp.task('img', () => {
-    return gulp.src('./app/img-src/*')
+    return gulp.src('./dev/img/*')
         .pipe(imagemin())
         .pipe(gulp.dest('./app/img'))
         .pipe(browserSync.stream())
@@ -98,7 +98,7 @@ gulp.task('img', () => {
  * Look for changes in php files to reload the browser
  */
 gulp.task('html', () => {
-    return gulp.src('./app/**/*.php')
+    return gulp.src('./dev/**/*.php')
         .pipe(browserSync.stream())
 })
 
@@ -126,13 +126,13 @@ gulp.task('browser-sync', () => {
         }
     })
 
-    gulp.watch('./app/css/style.html.scss', gulp.series('csshtml'))
-    gulp.watch('./app/css/*.scss', gulp.series('sass'))
-    gulp.watch('./app/css/*.scss', gulp.series('pack-sass'))
-    gulp.watch('./app/js/es6Pattern.js', gulp.series('babel'))
-    gulp.watch('./app/js/main.js', gulp.series('js'))
-    gulp.watch('./app/img-src/*', gulp.series('img'))
-    gulp.watch('./app/**/*.php', gulp.series('html'))
+    gulp.watch('./dev/css/style.html.scss', gulp.series('csshtml'))
+    gulp.watch('./dev/css/*.scss', gulp.series('sass'))
+    gulp.watch('./dev/css/*.scss', gulp.series('pack-sass'))
+    gulp.watch('./dev/js/es6Pattern.js', gulp.series('babel'))
+    gulp.watch('./dev/js/main.js', gulp.series('js'))
+    gulp.watch('./dev/img-src/*', gulp.series('img'))
+    gulp.watch('./dev/**/*.php', gulp.series('html'))
 })
 
 /**
