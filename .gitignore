@@ -4,6 +4,7 @@ app/includes/style.php
 app/js/*.min.js
 app/js/*.map
 app/js/es6-babel.js
+app/*.php
 
 # Node apps #
 node_modules/

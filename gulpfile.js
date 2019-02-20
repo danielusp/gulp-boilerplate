@@ -8,7 +8,11 @@ const babel = require('gulp-babel')
 const del = require('del')
 const imagemin = require('gulp-imagemin')
 const sourcemaps = require('gulp-sourcemaps')
+const replace = require('gulp-replace')
 const browserSync = require('browser-sync').create()
+
+// Current date to use as cache-buster or version control
+const date = new Date()
 
 /**
  * Generates css for html body into include folder
@@ -20,7 +24,7 @@ gulp.task('csshtml', () => {
       .pipe(rename('style.php'))
       .pipe(gulp.dest('./app/includes'))
       .pipe(browserSync.stream())
-});
+})
 
 /**
  * Generates a compact style.css
@@ -31,7 +35,7 @@ gulp.task('sass', () => {
       .pipe(cleanCSS({compatibility: 'ie8'}))
       .pipe(gulp.dest('./app/css'))
       .pipe(browserSync.stream())
-});
+})
 
 /**
  * Join all other .scss files into one called all.css
@@ -43,7 +47,7 @@ gulp.task('pack-sass', () => {
       .pipe(cleanCSS({compatibility: 'ie8'}))
       .pipe(gulp.dest('./app/css'))
       .pipe(browserSync.stream())
-});
+})
 
 /**
  * Minify main.js and generate a .map file to better browser inspect
@@ -56,7 +60,7 @@ gulp.task('js', () => {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./app/js'))
         .pipe(browserSync.stream())
-});
+})
 
 
 /**
@@ -71,7 +75,7 @@ gulp.task('babel', () => {
         .pipe(rename('es6-babel.js'))
         .pipe(gulp.dest('./app/js'))
         .pipe(browserSync.stream())
-});
+})
 
 /**
  * Join all other .js files into one called all.min.js
@@ -82,7 +86,7 @@ gulp.task('pack-js', () => {
         .pipe(uglify())
         .pipe(gulp.dest('./app/js'))
         .pipe(browserSync.stream())
-});
+})
 
 /**
  * Compress images
@@ -92,7 +96,19 @@ gulp.task('img', () => {
         .pipe(imagemin())
         .pipe(gulp.dest('./app/img'))
         .pipe(browserSync.stream())
-});
+})
+
+/**
+ * Cache burster
+ * Insert a parameter in css and js callers to break cache
+ */
+gulp.task('cache-burster', () => {
+    return gulp.src(['./dev/index.php'])
+      .pipe(replace(/src\=\"(.*\.js)\"/g, 'src="$1?v='+date.getTime().toString()+'"'))
+      .pipe(replace(/href\=\"(.*\.css)\"/g, 'href="$1?v='+date.getTime().toString()+'"'))
+      .pipe(gulp.dest('./app/'))
+      .pipe(browserSync.stream())
+})
 
 /**
  * Look for changes in php files to reload the browser
@@ -112,7 +128,8 @@ gulp.task('clear', () => {
             'app/js/*.min.js',
             'app/js/*.map',
             'app/js/es6-babel.js',
-            'app/img/*'
+            'app/img/*',
+            'app/*.php'
         ])
 })
 
@@ -132,10 +149,11 @@ gulp.task('browser-sync', () => {
     gulp.watch('./dev/js/es6Pattern.js', gulp.series('babel'))
     gulp.watch('./dev/js/main.js', gulp.series('js'))
     gulp.watch('./dev/img-src/*', gulp.series('img'))
+    gulp.watch('./dev/*.php', gulp.series('cache-burster'))
     gulp.watch('./dev/**/*.php', gulp.series('html'))
 })
 
 /**
  * Call all tasks with a simple $ gulp
  */
-gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','html','browser-sync'))
+gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','cache-burster','html','browser-sync'))

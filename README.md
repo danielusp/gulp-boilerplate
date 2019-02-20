@@ -10,6 +10,7 @@ Pre configured Gulp tasks to start faster.
  - Generate css/js maps to better browser inspect
  - Write your code in ES6 pattern and transpile it to previous formats
  - Prefix CSS
+ - Cache burster by inserting a parameter on calling files
  - Delete files like logs etc.
  - Generate specific files to include into projects
  - Watch for file changes and refresh development enviroment 
@@ -44,6 +45,7 @@ All tasks are configured in **gulpfile.js**
 ### Examples
 
 Project folder called **app/** where you can test this Gulp boilerplate
+Development folder called **dev/** where development files lay
 
 ### Gulp extensions 
 
@@ -62,3 +64,4 @@ List of Gulp extensions installed in this boilerplate
  - @babel/preset-env
  - gulp-imagemin
  - gulp-sourcemaps
+ - gulp-replace
