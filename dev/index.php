@@ -16,6 +16,10 @@
             <button id="btn">Ok</button>
             <div id="message"></div>
         </form>
+        <p>
+            <!-- inject:link -->
+            <!-- endinject -->
+        </p>
     </body>
     <script src="js/main.min.js"></script>
     <script src="js/all.min.js"></script>

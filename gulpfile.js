@@ -10,9 +10,25 @@ const imagemin = require('gulp-imagemin')
 const sourcemaps = require('gulp-sourcemaps')
 const replace = require('gulp-replace')
 const browserSync = require('browser-sync').create()
+const inject = require('gulp-inject');
 
 // Current date to use as cache-buster or version control
 const date = new Date()
+
+/**
+ * Injects a HTML markup inside another HTML
+ */
+gulp.task('inject-html', () => {
+    return gulp.src('./dev/index.php')
+    .pipe(inject(gulp.src(['./dev/partials/link.html']), {
+      starttag: '<!-- inject:link -->',
+      transform: function (filePath, file) {
+        // return file contents as string
+        return file.contents.toString('utf8')
+      }
+    }))
+    .pipe(gulp.dest('./app/'));
+})
 
 /**
  * Generates css for html body into include folder
@@ -151,9 +167,10 @@ gulp.task('browser-sync', () => {
     gulp.watch('./dev/img-src/*', gulp.series('img'))
     gulp.watch('./dev/*.php', gulp.series('cache-burster'))
     gulp.watch('./dev/**/*.php', gulp.series('html'))
+    gulp.watch('./dev/index.php', gulp.series('inject-html'))
 })
 
 /**
  * Call all tasks with a simple $ gulp
  */
-gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','cache-burster','html','browser-sync'))
+gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','cache-burster','html','inject-html','browser-sync'))

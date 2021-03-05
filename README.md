@@ -16,6 +16,7 @@ Pre configured Gulp tasks to start faster.
  - Watch for file changes and refresh development enviroment 
  - Keeping apart development files from production files in a easy way
  - Speed up development/debug
+ - Injects HTML markup
  - ...
 
 ### Install
@@ -65,3 +66,4 @@ List of Gulp extensions installed in this boilerplate
  - gulp-imagemin
  - gulp-sourcemaps
  - gulp-replace
+ - gulp-inject
