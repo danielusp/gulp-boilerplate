@@ -17,6 +17,7 @@ Pre configured Gulp tasks to start faster.
  - Keeping apart development files from production files in a easy way
  - Speed up development/debug
  - Injects HTML markup
+ - Build files through mustache template
  - ...
 
 ### Install
@@ -67,3 +68,4 @@ List of Gulp extensions installed in this boilerplate
  - gulp-sourcemaps
  - gulp-replace
  - gulp-inject
+ - gulp-mustache

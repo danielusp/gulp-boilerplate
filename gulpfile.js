@@ -11,9 +11,30 @@ const sourcemaps = require('gulp-sourcemaps')
 const replace = require('gulp-replace')
 const browserSync = require('browser-sync').create()
 const inject = require('gulp-inject');
+const mustache = require("gulp-mustache");
 
 // Current date to use as cache-buster or version control
 const date = new Date()
+
+/**
+ * Mustache template
+ */
+gulp.task('mustache', () => {
+    return gulp.src("./dev/templates/index.mustache")
+    .pipe(mustache({
+        title: "This is a mustache template generated",
+        text: "Here is the text to fill mustache template. Looks good!"
+    }))
+    .pipe(rename({basename: 'index', extname: '.html'}))
+    .pipe(gulp.dest("./app/"));
+})
+
+gulp.task('mustache-file', () => {
+    return gulp.src("./dev/templates/file.mustache")
+    .pipe(mustache('./dev/mustache-values.json',{},{}))
+    .pipe(rename({basename: 'file', extname: '.html'}))
+    .pipe(gulp.dest("./app/"));
+})
 
 /**
  * Injects a HTML markup inside another HTML
@@ -145,7 +166,8 @@ gulp.task('clear', () => {
             'app/js/*.map',
             'app/js/es6-babel.js',
             'app/img/*',
-            'app/*.php'
+            'app/*.php',
+            'app/*.html'
         ])
 })
 
@@ -173,4 +195,4 @@ gulp.task('browser-sync', () => {
 /**
  * Call all tasks with a simple $ gulp
  */
-gulp.task('default', gulp.series('csshtml','sass','pack-sass','js','babel','pack-js','img','cache-burster','html','inject-html','browser-sync'))
+gulp.task('default', gulp.series('mustache','mustache-file','csshtml','sass','pack-sass','js','babel','pack-js','img','cache-burster','html','inject-html','browser-sync'))

@@ -5,6 +5,7 @@ app/js/*.min.js
 app/js/*.map
 app/js/es6-babel.js
 app/*.php
+app/*.html
 
 # Node apps #
 node_modules/
